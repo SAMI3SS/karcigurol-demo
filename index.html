@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karcı Gürol Cafe — Denizli</title>
+  <meta name="description" content="Denizli'nin en özel mekanı. Kahvaltı, organizasyon, düğün ve nişan etkinlikleri için Karcı Gürol Cafe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dark: #9A7B2F;
+      --espresso: #1C0F07;
+      --dark: #120A04;
+      --cream: #FDF8F0;
+      --warm-white: #FAF5EB;
+      --text-muted: #8A7560;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(201,168,76,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(18, 10, 4, 0.92);
+      backdrop-filter: blur(20px);
+      padding: 14px 40px;
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 500;
+      color: var(--gold-light);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--cream); font-weight: 300; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      color: rgba(253,248,240,0.7); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 8px 22px;
+      border-radius: 30px;
+      font-weight: 600 !important;
+      transition: background 0.25s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; transform: translateY(-1px); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; padding: 4px; background: none; border: none;
+    }
+    .hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--cream); border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none; position: fixed; inset: 0; z-index: 99;
+      background: rgba(18, 10, 4, 0.97);
+      backdrop-filter: blur(20px);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 36px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--cream); text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 400;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--gold-light); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: radial-gradient(ellipse at 60% 40%, #2d1505 0%, var(--dark) 65%);
+    }
+    .hero-bg-decor {
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 600px 600px at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 400px 400px at 10% 80%, rgba(201,168,76,0.05) 0%, transparent 60%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none; opacity: 0.03;
+      background-image: linear-gradient(var(--gold) 1px, transparent 1px),
+                        linear-gradient(90deg, var(--gold) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; text-align: center; padding: 0 24px;
+      max-width: 860px;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      color: var(--gold-light);
+      font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 7px 20px; border-radius: 30px; margin-bottom: 28px;
+      animation: fadeDown 0.8s ease both;
+    }
+    .hero-logo-circle {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: var(--cream);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 28px;
+      box-shadow: 0 0 0 1px var(--glass-border), 0 0 60px rgba(201,168,76,0.15);
+      animation: fadeDown 0.8s ease 0.1s both;
+    }
+    .hero-logo-circle svg { width: 52px; height: 52px; }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--cream);
+      animation: fadeUp 0.9s ease 0.2s both;
+    }
+    .hero-title em { font-style: italic; color: var(--gold-light); }
+    .hero-sub {
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      color: rgba(253,248,240,0.6);
+      letter-spacing: 0.06em; font-weight: 300;
+      margin: 16px 0 40px;
+      animation: fadeUp 0.9s ease 0.35s both;
+    }
+    .hero-btns {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.9s ease 0.5s both;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 14px 36px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,168,76,0.4);
+    }
+    .btn-outline {
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      color: var(--cream);
+      padding: 14px 36px; border-radius: 50px;
+      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(253,248,240,0.4); font-size: 0.68rem; letter-spacing: 0.15em;
+      text-transform: uppercase; animation: fadeUp 1s ease 0.8s both;
+    }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--glass);
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      display: flex; justify-content: center; flex-wrap: wrap;
+    }
+    .stat-item {
+      padding: 28px 48px;
+      text-align: center;
+      border-right: 1px solid var(--glass-border);
+      flex: 1; min-width: 160px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem; font-weight: 500;
+      color: var(--gold-light); line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(253,248,240,0.5); margin-top: 6px;
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 100px 24px; }
+    .section-tag {
+      font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; line-height: 1.2;
+      color: var(--cream); margin-bottom: 20px;
+    }
+    .section-title em { font-style: italic; color: var(--gold-light); }
+    .section-desc {
+      color: rgba(253,248,240,0.55);
+      font-size: 1rem; line-height: 1.8; max-width: 560px;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    /* ── ABOUT ── */
+    #about { background: var(--espresso); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%; aspect-ratio: 4/5;
+      background: linear-gradient(135deg, #2d1a06 0%, #1a0d02 100%);
+      border-radius: 8px;
+      overflow: hidden; position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .about-img-main::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(28,15,7,0.6) 0%, transparent 60%);
+    }
+    .about-img-main .img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #3d2010 0%, #1a0d02 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: -30px; right: -30px;
+      width: 45%; aspect-ratio: 1;
+      background: linear-gradient(135deg, #2a1608 0%, #150b01 100%);
+      border-radius: 8px;
+      border: 3px solid var(--espresso);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+      overflow: hidden;
+    }
+    .about-img-accent .img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #4d2e10 0%, #2a1608 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .about-year-badge {
+      position: absolute; top: 28px; left: -20px;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 18px 22px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(201,168,76,0.3);
+    }
+    .about-year-badge .year { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; line-height: 1; }
+    .about-year-badge .year-label { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+    .about-features {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 36px;
+    }
+    .about-feature {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 10px;
+      padding: 18px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .about-feature:hover { background: rgba(201,168,76,0.06); border-color: rgba(201,168,76,0.35); }
+    .about-feature-icon { font-size: 1.4rem; margin-bottom: 8px; }
+    .about-feature-title { font-size: 0.82rem; font-weight: 600; color: var(--gold-light); letter-spacing: 0.04em; }
+    .about-feature-text { font-size: 0.76rem; color: rgba(253,248,240,0.5); margin-top: 4px; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--dark); }
+    .services-header { text-align: center; margin-bottom: 64px; }
+    .services-header .section-desc { margin: 0 auto; }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .service-card {
+      position: relative; overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      background: var(--espresso);
+    }
+    .service-card:first-child { border-radius: 12px 0 0 12px; }
+    .service-card:last-child { border-radius: 0 12px 12px 0; }
+    .service-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      transition: transform 0.6s ease;
+    }
+    .service-card:hover .service-bg { transform: scale(1.06); }
+    .service-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(18,10,4,0.95) 0%, rgba(18,10,4,0.3) 50%, rgba(18,10,4,0.1) 100%);
+      transition: background 0.4s;
+    }
+    .service-card:hover .service-overlay {
+      background: linear-gradient(to top, rgba(18,10,4,0.97) 0%, rgba(18,10,4,0.5) 60%, rgba(18,10,4,0.2) 100%);
+    }
+    .service-content {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 32px 28px;
+    }
+    .service-icon {
+      font-size: 2rem; margin-bottom: 12px;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.35s, transform 0.35s;
+    }
+    .service-card:hover .service-icon { opacity: 1; transform: translateY(0); }
+    .service-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem; color: var(--gold);
+      letter-spacing: 0.15em; margin-bottom: 8px;
+    }
+    .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem; font-weight: 400;
+      color: var(--cream); line-height: 1.2;
+    }
+    .service-desc {
+      font-size: 0.8rem; color: rgba(253,248,240,0.6);
+      margin-top: 10px; line-height: 1.6;
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s;
+      opacity: 0;
+    }
+    .service-card:hover .service-desc { max-height: 100px; opacity: 1; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--gold); font-size: 0.75rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; margin-top: 16px;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.35s 0.05s, transform 0.35s 0.05s;
+    }
+    .service-card:hover .service-link { opacity: 1; transform: translateY(0); }
+    .service-link::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+    .service-link:hover::after { transform: translateX(4px); }
+
+    /* Service bg gradients (placeholder colors) */
+    .svc-1 .service-bg { background: linear-gradient(160deg, #4a2810 0%, #1e0d03 100%); }
+    .svc-2 .service-bg { background: linear-gradient(160deg, #2d1c3a 0%, #120a20 100%); }
+    .svc-3 .service-bg { background: linear-gradient(160deg, #1e3a2a 0%, #0a1a12 100%); }
+
+    /* ── MENU HIGHLIGHTS ── */
+    #menu { background: var(--espresso); }
+    .menu-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 52px; flex-wrap: wrap; gap: 20px; }
+    .menu-tabs {
+      display: flex; gap: 4px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--glass-border);
+      border-radius: 40px; padding: 4px;
+    }
+    .menu-tab {
+      padding: 8px 20px; border-radius: 30px;
+      font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer; border: none; background: none;
+      color: rgba(253,248,240,0.5);
+      transition: background 0.25s, color 0.25s;
+    }
+    .menu-tab.active {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: 600;
+    }
+    .menu-items {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .menu-item {
+      display: flex; align-items: center; gap: 20px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px; padding: 20px;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s;
+      cursor: default;
+    }
+    .menu-item:hover {
+      background: rgba(201,168,76,0.07);
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-2px);
+    }
+    .menu-item-img {
+      width: 68px; height: 68px;
+      border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem;
+    }
+    .menu-item-info { flex: 1; min-width: 0; }
+    .menu-item-name { font-size: 0.92rem; font-weight: 500; color: var(--cream); }
+    .menu-item-desc { font-size: 0.75rem; color: rgba(253,248,240,0.5); margin-top: 3px; line-height: 1.5; }
+    .menu-item-price { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); font-weight: 500; white-space: nowrap; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--dark); }
+    .gallery-header { text-align: center; margin-bottom: 52px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 8px;
+    }
+    .gallery-item {
+      overflow: hidden; border-radius: 8px;
+      cursor: pointer; position: relative;
+      background: var(--espresso);
+    }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-item-inner {
+      width: 100%; height: 100%; min-height: 200px;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover .gallery-item-inner { transform: scale(1.04); }
+    .gallery-placeholder {
+      width: 100%; height: 100%; min-height: inherit;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+    }
+    .gallery-placeholder::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(201,168,76,0.04) 100%);
+    }
+    .g1 { background: linear-gradient(135deg, #3d2010 0%, #1a0d02 100%); }
+    .g2 { background: linear-gradient(135deg, #2d1c3a 0%, #120a20 100%); }
+    .g3 { background: linear-gradient(135deg, #1e3a2a 0%, #0a1a12 100%); }
+    .g4 { background: linear-gradient(135deg, #3a2010 0%, #1a0a02 100%); }
+    .g5 { background: linear-gradient(135deg, #3a1a2a 0%, #200a18 100%); }
+    .g6 { background: linear-gradient(135deg, #1e2a3a 0%, #0a1220 100%); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: rgba(18,10,4,0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.3s;
+    }
+    .gallery-item:hover .gallery-item-overlay { background: rgba(18,10,4,0.3); }
+    .gallery-expand {
+      width: 44px; height: 44px;
+      border-radius: 50%; background: var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--dark);
+      opacity: 0; transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .gallery-expand { opacity: 1; transform: scale(1); }
+
+    /* ── TESTIMONIALS ── */
+    #testimonials { background: var(--espresso); }
+    .testimonials-header { text-align: center; margin-bottom: 52px; }
+    .testimonials-track {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px; padding: 32px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .testimonial-card:hover { border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+    .testimonial-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 3px; margin-bottom: 16px; }
+    .testimonial-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic;
+      color: rgba(253,248,240,0.85); line-height: 1.75;
+    }
+    .testimonial-author {
+      display: flex; align-items: center; gap: 14px; margin-top: 24px;
+    }
+    .testimonial-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; color: var(--dark); font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      flex-shrink: 0;
+    }
+    .testimonial-name { font-size: 0.85rem; font-weight: 600; color: var(--cream); }
+    .testimonial-meta { font-size: 0.72rem; color: rgba(253,248,240,0.4); margin-top: 2px; }
+
+    /* ── CTA SECTION ── */
+    #cta {
+      background: var(--dark);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 800px 600px at 50% 50%, rgba(201,168,76,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; max-width: 720px; margin: 0 auto; }
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 300; color: var(--cream); line-height: 1.15; margin-bottom: 20px;
+    }
+    .cta-title em { font-style: italic; color: var(--gold-light); }
+    .cta-desc { color: rgba(253,248,240,0.55); font-size: 1rem; line-height: 1.8; margin-bottom: 40px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-whatsapp {
+      background: #25D366;
+      color: #fff;
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 0.85rem; font-weight: 600;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 9px;
+      transition: background 0.25s, transform 0.2s;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.25);
+    }
+    .btn-whatsapp:hover { background: #1ea850; transform: translateY(-2px); }
+    .btn-phone {
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      color: var(--cream);
+      padding: 14px 32px; border-radius: 50px;
+      font-size: 0.85rem; letter-spacing: 0.06em;
+      text-decoration: none;
+      display: inline-flex; align-items: center; gap: 9px;
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    }
+    .btn-phone:hover { border-color: var(--gold); background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+
+    /* ── CONTACT + MAP ── */
+    #contact { background: var(--espresso); }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1.6fr;
+      gap: 60px; align-items: start;
+    }
+    .contact-info h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem; font-weight: 400;
+      color: var(--cream); margin-bottom: 32px;
+    }
+    .contact-item {
+      display: flex; gap: 16px;
+      margin-bottom: 24px; align-items: flex-start;
+    }
+    .contact-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+    .contact-value { font-size: 0.92rem; color: var(--cream); }
+    .contact-value a { color: var(--cream); text-decoration: none; }
+    .contact-value a:hover { color: var(--gold-light); }
+    .social-links { display: flex; gap: 12px; margin-top: 32px; }
+    .social-link {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; text-decoration: none;
+      transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    }
+    .social-link:hover { background: rgba(201,168,76,0.12); border-color: var(--gold); transform: translateY(-2px); }
+    .map-container {
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--glass-border);
+      background: var(--glass);
+      aspect-ratio: 16/10;
+    }
+    .map-container iframe { width: 100%; height: 100%; border: none; filter: grayscale(20%) invert(90%) hue-rotate(180deg); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid var(--glass-border);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; color: var(--gold-light);
+    }
+    .footer-copy { font-size: 0.75rem; color: rgba(253,248,240,0.35); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.75rem; color: rgba(253,248,240,0.4); text-decoration: none; }
+    .footer-links a:hover { color: var(--gold-light); }
+
+    /* ── FLOATING WHATSAPP ── */
+    .float-wa {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 56px; height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      animation: floatBounce 3s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+    .float-wa:hover { transform: scale(1.1); animation: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+    @keyframes floatBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 60px; }
+      .about-img-main { max-width: 560px; margin: 0 auto; aspect-ratio: 16/9; }
+      .about-img-accent { display: none; }
+      .about-year-badge { top: -16px; left: 16px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .service-card { aspect-ratio: 16/7; border-radius: 12px !important; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .gallery-item:nth-child(4) { grid-column: span 1; }
+      .testimonials-track { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      nav.scrolled { padding: 12px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      section { padding: 72px 20px; }
+      .stat-item { padding: 20px 24px; min-width: 120px; }
+      .stat-num { font-size: 1.8rem; }
+      .about-features { grid-template-columns: 1fr; }
+      .menu-header { flex-direction: column; align-items: flex-start; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(1) { grid-column: span 2; }
+      .services-grid { gap: 12px; }
+      .service-card { aspect-ratio: 16/8; }
+      .hero-scroll { display: none; }
+    }
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:nth-child(1),
+      .gallery-item:nth-child(4) { grid-column: span 1; }
+      .stats-bar { display: grid; grid-template-columns: 1fr 1fr; }
+      .stat-item:nth-child(2) { border-right: none; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--glass-border); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">Karcı <span>Gürol</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Hakkımızda</a></li>
+    <li><a href="#services">Hizmetler</a></li>
+    <li><a href="#menu">Menü</a></li>
+    <li><a href="#gallery">Galeri</a></li>
+    <li><a href="#contact" class="nav-cta">İletişim</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menü">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">Hakkımızda</a>
+  <a href="#services" class="mobile-link">Hizmetler</a>
+  <a href="#menu" class="mobile-link">Menü</a>
+  <a href="#gallery" class="mobile-link">Galeri</a>
+  <a href="#contact" class="mobile-link">İletişim</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-decor"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Denizli'nin En Özel Mekanı ✦</div>
+    <div class="hero-logo-circle">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="50" y="38" text-anchor="middle" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#1C0F07">K</text>
+        <line x1="25" y1="52" x2="75" y2="52" stroke="#C9A84C" stroke-width="1.5"/>
+        <text x="50" y="72" text-anchor="middle" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#1C0F07">G</text>
+      </svg>
+    </div>
+    <h1 class="hero-title">Karcı <em>Gürol</em><br>Cafe</h1>
+    <p class="hero-sub">Kahvaltı · Organizasyon · Düğün & Nişan · Denizli</p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Hizmetlerimiz</a>
+      <a href="#contact" class="btn-outline">Rezervasyon Yap</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Aşağı Kaydır</span>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num" data-count="2">0</div>
+    <div class="stat-label">Şube</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-num" data-count="1155">0</div>
+    <div class="stat-label">Instagram Takipçi</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-num" data-count="500">0</div>
+    <div class="stat-label">Mutlu Misafir</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-num" data-count="100">0</div>
+    <div class="stat-label">Organizasyon</div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-year-badge">
+          <div class="year">K/G</div>
+          <div class="year-label">Cafe</div>
+        </div>
+        <div class="about-img-main">
+          <div class="img-placeholder g1">
+            <span style="font-size:5rem; opacity:0.3">☕</span>
+          </div>
+        </div>
+        <div class="about-img-accent">
+          <div class="img-placeholder g4">
+            <span style="font-size:2rem; opacity:0.3">🌿</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <p class="section-tag">✦ Hakkımızda</p>
+        <h2 class="section-title">Özel Anlarınızı<br><em>Unutulmaz</em> Kılıyoruz</h2>
+        <p class="section-desc">
+          Denizli'nin kalbinde yer alan Karcı Gürol Cafe; zengin kahvaltı seçenekleri,
+          şık organizasyon alanları ve sıcak atmosferiyle her ziyareti özel bir deneyime
+          dönüştürüyor. İki şubemizde düğün, nişan ve doğum günü etkinlikleriniz için
+          profesyonel hizmet sunuyoruz.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">🍳</div>
+            <div class="about-feature-title">Zengin Kahvaltı</div>
+            <div class="about-feature-text">Taze ve lezzetli kahvaltı tabakları</div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">💍</div>
+            <div class="about-feature-title">Nişan & Düğün</div>
+            <div class="about-feature-text">Özel organizasyon ve dekorasyon</div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">🎂</div>
+            <div class="about-feature-title">Doğum Günü</div>
+            <div class="about-feature-text">Sürpriz kutlamalar ve pastalar</div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">🏡</div>
+            <div class="about-feature-title">2 Şube</div>
+            <div class="about-feature-text">Denizli'de iki lokasyonda hizmet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-header reveal">
+      <p class="section-tag">✦ Hizmetlerimiz</p>
+      <h2 class="section-title">Her Özel Gün İçin<br><em>Buradayız</em></h2>
+      <p class="section-desc">Kahvaltıdan organizasyona, nişandan düğüne kadar her anınızı özelleştiriyoruz.</p>
+    </div>
+    <div class="services-grid reveal reveal-delay-1">
+      <div class="service-card svc-1">
+        <div class="service-bg"></div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <div class="service-icon">🍳</div>
+          <div class="service-num">01</div>
+          <div class="service-name">Kahvaltı &<br>Yemek</div>
+          <div class="service-desc">Taze malzemelerle hazırlanan zengin kahvaltı tabakları ve lezzetli yemekler. Her sabah özel bir deneyim.</div>
+          <a href="#contact" class="service-link">Rezervasyon</a>
+        </div>
+      </div>
+      <div class="service-card svc-2">
+        <div class="service-bg"></div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <div class="service-icon">💍</div>
+          <div class="service-num">02</div>
+          <div class="service-name">Nişan &<br>Düğün</div>
+          <div class="service-desc">Hayalinizdeki nişan ve düğün için özel dekorasyon, catering ve organizasyon hizmeti.</div>
+          <a href="#contact" class="service-link">Bilgi Al</a>
+        </div>
+      </div>
+      <div class="service-card svc-3">
+        <div class="service-bg"></div>
+        <div class="service-overlay"></div>
+        <div class="service-content">
+          <div class="service-icon">🎉</div>
+          <div class="service-num">03</div>
+          <div class="service-name">Özel<br>Organizasyon</div>
+          <div class="service-desc">Doğum günü, mezuniyet, kutlama... Her türlü özel etkinlik için profesyonel organizasyon.</div>
+          <a href="#contact" class="service-link">Planla</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="container">
+    <div class="menu-header">
+      <div class="reveal">
+        <p class="section-tag">✦ Menü</p>
+        <h2 class="section-title">Lezzetli<br><em>Seçenekler</em></h2>
+      </div>
+      <div class="menu-tabs reveal reveal-delay-2">
+        <button class="menu-tab active" data-tab="kahvalti">Kahvaltı</button>
+        <button class="menu-tab" data-tab="icecekler">İçecekler</button>
+        <button class="menu-tab" data-tab="tatlilar">Tatlılar</button>
+      </div>
+    </div>
+
+    <div class="menu-items reveal reveal-delay-1" id="menuItems">
+      <!-- Kahvaltı items injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="container">
+    <div class="gallery-header reveal">
+      <p class="section-tag">✦ Galeri</p>
+      <h2 class="section-title">Mekanımızdan<br><em>Kareler</em></h2>
+    </div>
+    <div class="gallery-grid reveal reveal-delay-1">
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g1"><span>🌿</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g2"><span>💍</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g3"><span>🎂</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g4"><span>☕</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g5"><span>🎊</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-inner">
+          <div class="gallery-placeholder g6"><span>🌸</span></div>
+        </div>
+        <div class="gallery-item-overlay"><div class="gallery-expand">⤢</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="testimonials-header reveal">
+      <p class="section-tag">✦ Müşteri Yorumları</p>
+      <h2 class="section-title">Onlar Ne Dedi?</h2>
+    </div>
+    <div class="testimonials-track">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Nişan organizasyonumuzu burada yaptırdık. Dekorasyon muhteşemdi, hizmet kalitesi mükemmeldi. Misafirlerimiz çok beğendi!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div>
+            <div class="testimonial-name">Ayşe K.</div>
+            <div class="testimonial-meta">Nişan Organizasyonu</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Kahvaltı çeşitleri inanılmaz zengin. Özellikle karlışurup favorimiz oldu. Her hafta sonu burada buluşuyoruz artık."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div>
+            <div class="testimonial-name">Mehmet Y.</div>
+            <div class="testimonial-meta">Düzenli Müşteri</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card reveal reveal-delay-3">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Kızımın doğum günü sürprizini burada yaptık. Pasta, dekorasyon, her şey harikaydı. Teşekkürler Karcı Gürol Cafe!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">F</div>
+          <div>
+            <div class="testimonial-name">Fatma Ş.</div>
+            <div class="testimonial-meta">Doğum Günü Organizasyonu</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <p class="section-tag" style="text-align:center">✦ Rezervasyon</p>
+      <h2 class="cta-title">Özel Gününüzü<br><em>Birlikte Planlayalım</em></h2>
+      <p class="cta-desc">Düğün, nişan, doğum günü veya özel bir etkinlik için bize ulaşın. Hayalinizdeki organizasyonu gerçeğe dönüştürelim.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/905326738232" target="_blank" class="btn-whatsapp">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp ile Yaz
+        </a>
+        <a href="tel:+905326738232" class="btn-phone">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67 2 2 0 011.99-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 6a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 12.92z"/></svg>
+          0532 673 82 32
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="section-tag">✦ İletişim</p>
+        <h3>Bize Ulaşın</h3>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Adres</div>
+            <div class="contact-value">Başkarcı Mahallesi, Denizli</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Telefon</div>
+            <div class="contact-value"><a href="tel:+905326738232">0532 673 82 32</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">💬</div>
+          <div>
+            <div class="contact-label">WhatsApp</div>
+            <div class="contact-value"><a href="https://wa.me/905326738232" target="_blank">Mesaj Gönder</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-label">Çalışma Saatleri</div>
+            <div class="contact-value">Her gün 08:00 — 23:00</div>
+          </div>
+        </div>
+        <div class="social-links">
+          <a href="https://instagram.com/karcigurol" target="_blank" class="social-link" title="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://wa.me/905326738232" target="_blank" class="social-link" title="WhatsApp">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          </a>
+          <a href="tel:+905326738232" class="social-link" title="Telefon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67 2 2 0 011.99-2.18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 6a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 12.92z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="map-container reveal reveal-delay-2">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12641.61!2d29.086!3d37.786!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c73f50ed20cabd%3A0xf0f455e33e68c05!2sDenizli!5e0!3m2!1str!2str!4v1234567890"
+          allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Karcı Gürol Cafe Konum">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Karcı Gürol Cafe</div>
+    <div class="footer-copy">© 2025 Karcı Gürol Cafe · Denizli · Tüm hakları saklıdır.</div>
+    <div class="footer-links">
+      <a href="#hero">Anasayfa</a>
+      <a href="#services">Hizmetler</a>
+      <a href="#contact">İletişim</a>
+    </div>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/905326738232" target="_blank" class="float-wa" title="WhatsApp ile yazın">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+  // NAV SCROLL
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // HAMBURGER
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
+  // REVEAL ON SCROLL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // COUNT UP ANIMATION
+  const counters = document.querySelectorAll('[data-count]');
+  const countObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        const target = +e.target.dataset.count;
+        const duration = 1600;
+        const step = target / (duration / 16);
+        let current = 0;
+        const timer = setInterval(() => {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          e.target.textContent = Math.floor(current).toLocaleString('tr-TR');
+          if (target <= 10) e.target.textContent = Math.floor(current);
+        }, 16);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => countObserver.observe(c));
+
+  // MENU DATA
+  const menuData = {
+    kahvalti: [
+      { icon: '🍳', name: 'Serpme Kahvaltı', desc: 'Zengin çeşitlerle dolu geleneksel serpme', price: 'Fiyat için arayın' },
+      { icon: '🥞', name: 'Karlışurup', desc: 'Özel mekan lezzeti, enfes karışık tatlı', price: 'Fiyat için arayın' },
+      { icon: '🍞', name: 'Menemen', desc: 'Taze domates, biber ve yumurta', price: 'Fiyat için arayın' },
+      { icon: '🧀', name: 'Peynir Tabağı', desc: 'Çeşit peynirler, zeytin ve yeşillikler', price: 'Fiyat için arayın' },
+      { icon: '🫖', name: 'Çay & Kahve', desc: 'Demlik çay, Türk kahvesi, filtre kahve', price: 'Fiyat için arayın' },
+      { icon: '🥚', name: 'Omlet Çeşitleri', desc: 'Sade, sebzeli veya peynirli omlet', price: 'Fiyat için arayın' },
+    ],
+    icecekler: [
+      { icon: '☕', name: 'Türk Kahvesi', desc: 'Geleneksel taş dibek Türk kahvesi', price: 'Fiyat için arayın' },
+      { icon: '🧃', name: 'Taze Sıkılmış', desc: 'Portakal, elma, karışık meyve', price: 'Fiyat için arayın' },
+      { icon: '🍵', name: 'Bitki Çayları', desc: 'Ihlamur, ada çayı, papatya ve daha fazlası', price: 'Fiyat için arayın' },
+      { icon: '🥤', name: 'Soğuk İçecekler', desc: 'Limonata, ayran, meşrubat', price: 'Fiyat için arayın' },
+    ],
+    tatlilar: [
+      { icon: '🎂', name: 'Özel Pastalar', desc: 'Organizasyonlar için kişiye özel pasta', price: 'Fiyat için arayın' },
+      { icon: '🍮', name: 'Sütlaç', desc: 'Fırında pişmiş geleneksel sütlaç', price: 'Fiyat için arayın' },
+      { icon: '🥐', name: 'Pasta Çeşitleri', desc: 'Günlük taze hazırlanan pasta dilimleri', price: 'Fiyat için arayın' },
+    ]
+  };
+
+  function renderMenu(tab) {
+    const container = document.getElementById('menuItems');
+    const items = menuData[tab];
+    container.innerHTML = items.map(item => `
+      <div class="menu-item">
+        <div class="menu-item-img" style="background:var(--glass);border:1px solid var(--glass-border);">${item.icon}</div>
+        <div class="menu-item-info">
+          <div class="menu-item-name">${item.name}</div>
+          <div class="menu-item-desc">${item.desc}</div>
+        </div>
+        <div class="menu-item-price">${item.price}</div>
+      </div>
+    `).join('');
+  }
+
+  renderMenu('kahvalti');
+
+  document.querySelectorAll('.menu-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const menuItems = document.getElementById('menuItems');
+      menuItems.style.opacity = '0';
+      menuItems.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        renderMenu(tab.dataset.tab);
+        menuItems.style.transition = 'opacity 0.35s, transform 0.35s';
+        menuItems.style.opacity = '1';
+        menuItems.style.transform = 'translateY(0)';
+      }, 200);
+    });
+  });
+</script>
+</body>
+</html>
